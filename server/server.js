@@ -5,13 +5,18 @@ mongoose.connect('mongodb://localhost:27017/TodoApp', { useNewUrlParser: true })
 
 const Todo = mongoose.model('Todo', {
     text: {
-        type: String
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true
     },
     completed: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     completedAt: {
-        type: Number
+        type: Number,
+        default: null
     }
 });
 
@@ -25,14 +30,23 @@ const Todo = mongoose.model('Todo', {
 //     console.log('Unable to save todo');
 // });
 
-const otherTodo = new Todo({
-    text: 'Wash the car',
-    completed: true,
-    completedAt: 123
+
+// User
+const User = mongoose.model('User', {
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 1
+    }
+})
+
+const user = new User({
+    email: 'periyan.ara@gmail.com'
 });
 
-otherTodo.save().then((doc) => {
-    console.log('Saved todo', doc);
+user.save().then((doc) => {
+    console.log('User todo', doc);
 }, (err) => {
-    console.log('Unable to save todo');
+    console.log('Unable to save user');
 });
